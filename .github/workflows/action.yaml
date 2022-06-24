@@ -3,3 +3,29 @@ on:
   push:
    branches:
    - main
+
+jobs:
+  build:
+    runs-on: ubintu-latest
+    steps:
+     - name: Choeck out
+       uses: actions/chceckout@v2
+     - name: Set python
+       uses: actions/setup-python@v2
+       with:
+         python-version: 3.8
+     - name: install lib
+       run: |
+         cd function
+         python -m pip install --upgrade pip
+         if [ -f requirements.txt ]; then pip install -r requirements.txt -t .; fi
+     - name: Create zip bundle
+       run: |
+         cd function
+         zip -r ../${{ githib.sha }}.zip
+     - name: Archive artifact
+       uses: actions/upload-artificat@v2
+       with:
+         name: zipped-bundle
+         path: ${{ github.sha }}.zip
+     
