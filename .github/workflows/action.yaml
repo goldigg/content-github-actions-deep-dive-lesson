@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubintu-latest
+    runs-on: ubuntu-latest
     steps:
      - name: Choeck out
        uses: actions/chceckout@v2
